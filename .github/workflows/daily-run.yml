@@ -23,6 +23,9 @@ jobs:
         run: |
           Rscript -e 'install.packages(c("dplyr","jsonlite","ggplot2"), repos="https://cloud.r-project.org")'
 
+      - name: Ensure data folder exists
+        run: mkdir -p data
+
       - name: Run the script
         run: Rscript scripts/forex_daily_extraction.R
 
