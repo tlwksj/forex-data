@@ -24,7 +24,7 @@ jobs:
           Rscript -e 'install.packages(c("dplyr","jsonlite","ggplot2"), repos="https://cloud.r-project.org")'
 
       - name: Run the script
-        run: Rscript scripts/your_script_name.R
+        run: Rscript scripts/forex_daily_extraction.R
 
       - name: Commit and push updated CSV
         if: success()
