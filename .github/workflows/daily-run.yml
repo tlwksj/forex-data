@@ -24,13 +24,13 @@ jobs:
           Rscript -e 'install.packages(c("dplyr","jsonlite","ggplot2"), repos="https://cloud.r-project.org")'
 
       - name: Run the script
-        run: Rscript forex_daily_extraction.R
+        run: Rscript scripts/your_script_name.R
 
       - name: Commit and push updated CSV
         if: success()
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-          git add MXNUSD_ExchData.csv
+          git add data/MXNUSD_ExchData.csv
           git commit -m "Daily data update" || echo "No changes to commit"
           git push
