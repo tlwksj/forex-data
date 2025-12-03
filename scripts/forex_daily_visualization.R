@@ -22,6 +22,7 @@ daily <- read_csv(daily_file, show_col_types = FALSE)
 daily <- daily %>% mutate(Date = as.Date(Date))
 seven_day_start <- Sys.Date() - 7
 daily_7 <- daily %>% filter(Date >= seven_day_start)
+today <- Sys.Date()
 
 
 # Rate from daily API
@@ -68,7 +69,6 @@ ggsave("plots/last7_comparison_colored.png", p_last7, width = 10, height = 6)
 
 
 ## Loading historical data
-today <- Sys.Date()
 md <- format(today, "%m-%d")
 hist_file <- paste0("data/historical/USDMXN_", md, ".csv")
 
@@ -106,6 +106,7 @@ p_compare <- ggplot() +
   theme_minimal(base_size = 14)
 
 ggsave("plots/comparison_plot.png", p_compare, width = 10, height = 6)
+
 
 
 
