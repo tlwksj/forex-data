@@ -1,0 +1,50 @@
+name: Daily Forex Visualization
+
+on:
+  schedule:
+    - cron: "0 23 * * *"  
+  workflow_dispatch:   
+
+permissions:
+  contents: write
+
+jobs:
+  run-visualization:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+
+      - name: Install required R packages
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |
+            dplyr
+            ggplot2
+            readr
+            lubridate
+
+      - name: Ensure folders exist
+        run: |
+          mkdir -p plots
+          mkdir -p data
+          mkdir -p data/historical
+
+      - name: Run visualization script
+        run: Rscript scripts/forex_daily_visualization.R
+
+      - name: Commit and push plots
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add plots/*
+          if git diff --staged --quiet; then
+            echo "No new plots to commit"
+          else
+            git commit -m "Update plots"
+            git push
+          fi
