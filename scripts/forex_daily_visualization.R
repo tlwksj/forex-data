@@ -20,7 +20,7 @@ daily <- read_csv(daily_file, show_col_types = FALSE)
 
 # Ensure Date is Date type
 daily <- daily %>% mutate(Date = as.Date(Date))
-seven_day_start <- today - 7
+seven_day_start <- Sys.Date() - 7
 daily_7 <- daily %>% filter(Date >= seven_day_start)
 
 
@@ -103,4 +103,5 @@ p_compare <- ggplot() +
   theme_minimal(base_size = 14)
 
 ggsave("plots/comparison_plot.png", p_compare, width = 10, height = 6)
+
 
