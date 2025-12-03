@@ -69,6 +69,7 @@ if (!file.exists(hist_csv_file)) {
       )
       all_hist[[length(all_hist) + 1]] <- row
     }
+    Sys.sleep(3)
   }
   
   out <- bind_rows(all_hist)
