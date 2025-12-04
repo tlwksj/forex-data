@@ -50,7 +50,7 @@ hist_csv_file <- paste0("data/historical/USDMXN_", md, ".csv")
 # Otherwise we search through the last 5 years to see the changes.
 if (!file.exists(hist_csv_file)) {
   all_hist <- list()
-  for (year in 1:5) {
+  for (year in 5:1) {
     date_i <- today %m-% years(year)
     date_str <- format(date_i, "%Y-%m-%d")
     
