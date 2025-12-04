@@ -2,8 +2,8 @@ name: Daily Data Update
 
 on:
   schedule:
-    - cron: "0 13 * * *"   # runs once a day at 13:00 UTC
-  workflow_dispatch:        # allows manual run
+    - cron: "0 22 * * *"   
+  workflow_dispatch:      
 
 permissions:
   contents: write
