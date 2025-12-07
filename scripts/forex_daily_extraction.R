@@ -15,7 +15,14 @@ convert_usd_to_mxn <- function(rates_list) {
   as.numeric(rates_list$MXN) / as.numeric(rates_list$USD)
 }
 
-
+append_row <- function(df_row, file_path) {
+  if (!file.exists(file_path)) {
+    write.csv(df_row, file_path, row.names = FALSE)
+  } else {
+    write.table(df_row, file_path, sep = ",", col.names = FALSE,
+                row.names = FALSE, append = TRUE)
+  }
+}
 
 ## Script
 # TODAY'S OPEN-CLOSE Exchange rate
@@ -36,12 +43,7 @@ if (call$success) {
     change = call$quotes$USDMXN$change # Change during the day
   )
   
-  if (!file.exists(file)) {
-    write.csv(new_row, file, row.names = FALSE)
-  } else {
-    write.table(new_row, file, sep = ",", col.names = FALSE,
-                row.names = FALSE, append = TRUE)
-  }
+append_row(new_row, file)
 }
 
 
@@ -83,7 +85,7 @@ if (!file.exists(hist_csv_file)) {
   }
   
   out <- bind_rows(all_hist)
-  write.csv(out, hist_csv_file, row.names = FALSE)
+  append_row(toappend, hist_csv_file)
   
 } else {
   # If we had already gone through this date, we just look at today's data
@@ -102,13 +104,6 @@ if (!file.exists(hist_csv_file)) {
       rate = convert_usd_to_mxn(callh$rates)
     )
     
-    write.table(
-      toappend,
-      hist_csv_file,
-      sep = ",",
-      col.names = FALSE,
-      row.names = FALSE,
-      append = TRUE
-    )
+    append_row(toappend, hist_csv_file)
   }
 }
