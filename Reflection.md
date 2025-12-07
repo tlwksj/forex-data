@@ -1,5 +1,8 @@
 Project Reflection
 
+**What did the data show**     
+I noticed that the data does not show a lot variance day by day, having most of the changes be at most be 20 cents. In the past week, the Mexican peso appears to have strengthened as we can observe the negative slope on the past week visualization. As I have mentioned, there were no huge changes between the rates, meaning that both currencies were stable. 
+
 **What went right**   
   I was very fortunate that both of the APIs provided the data in a very clean manner. Allowing for minimal cleaning having to be done on the second script, this also made it easier to work with in general. I would say that 90% of the scripting done with R was done without horrible issues, aside from the typical errors one has as they build a project. 
 
