@@ -2,7 +2,7 @@ Automated Currency Monitoring & Visualization Pipeline
 Data 330 – Final Project     
 Author: Trishelle Leal     
 
-The project follows throught the complete data wrangling pipeline by automatically collecting, processing, and creating visualizations currency exchange rate data between the US dollar and the mexican peso using scheduled tasks, multiple APIs and R-based scripts. The full pipeline starts running daily at 5:00 PM EST, time when the market closes, retrieving the latest USD/MXN exchange rate, cleaning it, and generating refreshed visualizations.
+The project follows through the complete data wrangling pipeline by automatically collecting, processing, and creating visualizations currency exchange rate data between the US dollar and the mexican peso using scheduled tasks, multiple APIs and R-based scripts. The full pipeline starts running daily at 5:00 PM EST, time when the market closes, retrieving the latest USD/MXN exchange rate, cleaning it, and generating refreshed visualizations.
 
 **Project motivation**
 Growing up on the border between the US and Mexico, it is often that you see others tracking the exchange rate to be able to determine when it is best to buy dollars using their pesos. With this project, they could determine what days of the week or what seasons of the year the dollar drops and when it is best to buy or sell the currency. This project would be deemed beneficial by many, as it would automate the data search and having visualizations would make it easier to understand how today's rate compares to tomorrow's. 
