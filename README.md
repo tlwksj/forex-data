@@ -9,7 +9,7 @@ Growing up on the border between the US and Mexico, it is often that you see oth
 
 **Project Components**
 
-Scripts          
+1. Scripts          
    The scripts used for this project all live within this folder, this done with the intention of maintaining the repository completely organized and well-managed.
 
    a. Data extraction script (forex_daily_extraction.R)         
