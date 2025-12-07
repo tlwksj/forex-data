@@ -7,6 +7,21 @@ library(ggplot2)
 library(readr)
 library(lubridate)
 
+## Functions
+
+## Determines what color today is.
+get_today_color <- function(today, yesterday) {
+  if (is.na(yesterday_rate)) {
+    return("gray50")
+  } else if (today_rate < yesterday_rate) {
+    return("green3")
+  } else {
+    return("red3")
+  }
+}
+
+
+## Script 
 # Create plots folder if missing
 dir.create("plots", showWarnings = FALSE)
 
@@ -36,13 +51,6 @@ if (nrow(daily_7) >= 2) {
   yesterday_rate <- NA
 }
 
-if (is.na(yesterday_rate)) {
-  today_color <- "gray50"   # Not enough data: neutral color
-} else if (today_rate < yesterday_rate) {
-  today_color <- "green3" # If the Peso went UP
-} else {
-  today_color <- "red3" # RIP 
-}
 
 ## ggplot won't let you do a standalone point if it is not within a data frame :(
 today_df <- data.frame(Date = today, end_rate = today_rate)
@@ -53,8 +61,8 @@ p_last7 <- ggplot() +
   geom_line(data = daily_7, aes(x = Date, y = end_rate), linewidth = 1.2, color = "gray40") +
   
   # Today's colored point
-  geom_point(data = today_df, aes(x = Date, y = end_rate), color = today_color, size = 4) +
-  
+  geom_point(data = today_df, aes(x = Date, y = end_rate), 
+             color = get_today_color(today_rate, yesterday_rate, size = 4) +
   labs(
     title = "USD/MXN: Last 7 Days",
     x = "Date",
@@ -106,6 +114,7 @@ p_compare <- ggplot() +
   theme_minimal(base_size = 14)
 
 ggsave("plots/comparison_plot.png", p_compare, width = 10, height = 6)
+
 
 
 
