@@ -7,7 +7,17 @@ library(jsonlite)
 library(lubridate)
 library(ggplot2)
 
+## Functions
 
+# The API I used only supports EU rates so I had to get creative.
+# Converts from EU -> USD based rates
+convert_usd_to_mxn <- function(rates_list) {
+  as.numeric(rates_list$MXN) / as.numeric(rates_list$USD)
+}
+
+
+
+## Script
 # TODAY'S OPEN-CLOSE Exchange rate
 api_key <- Sys.getenv("API_KEY") # Not putting out my API on GH
 ex_ret <- paste0("https://api.exchangerate.host/change?access_key=", api_key, "&currencies=MXN")
@@ -65,7 +75,7 @@ if (!file.exists(hist_csv_file)) {
     if (callh$success) {
       row <- data.frame(
         date = callh$date,
-        rate = as.numeric(callh$rates$MXN) / as.numeric(callh$rates$USD)
+        rate = convert_usd_to_mxn(callh$rates)
       )
       all_hist[[length(all_hist) + 1]] <- row
     }
@@ -89,7 +99,7 @@ if (!file.exists(hist_csv_file)) {
     toappend <- data.frame(
       date = callh$date,
       # API does not support non EU exchange rates so I got creative. 
-      rate = as.numeric(callh$rates$MXN) / as.numeric(callh$rates$USD)
+      rate = convert_usd_to_mxn(callh$rates)
     )
     
     write.table(
