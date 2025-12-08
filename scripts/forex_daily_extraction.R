@@ -85,7 +85,7 @@ if (!file.exists(hist_csv_file)) {
   }
   
   out <- bind_rows(all_hist)
-  append_row(toappend, hist_csv_file)
+  append_row(row, hist_csv_file)
   
 } else {
   # If we had already gone through this date, we just look at today's data
