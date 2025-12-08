@@ -10,7 +10,7 @@ library(lubridate)
 ## Functions
 
 ## Determines what color today is.
-get_today_color <- function(today, yesterday) {
+get_today_color <- function(today_rate, yesterday_rate) {
   if (is.na(yesterday_rate)) {
     return("gray50")
   } else if (today_rate < yesterday_rate) {
@@ -19,7 +19,6 @@ get_today_color <- function(today, yesterday) {
     return("red3")
   }
 }
-
 
 ## Script 
 # Create plots folder if missing
@@ -39,30 +38,31 @@ seven_day_start <- Sys.Date() - 7
 daily_7 <- daily %>% filter(Date >= seven_day_start)
 today <- Sys.Date()
 
-
 # Rate from daily API
 today_rate <- tail(daily_7$end_rate, 1)
 
 ## Safety net
-### I don't have a full week of data by the time im testing this.
 if (nrow(daily_7) >= 2) {
   yesterday_rate <- daily_7$end_rate[nrow(daily_7) - 1]
 } else {
   yesterday_rate <- NA
 }
 
-
-## ggplot won't let you do a standalone point if it is not within a data frame :(
+## ggplot won't let you do a standalone point if it is not within a data frame
 today_df <- data.frame(Date = today, end_rate = today_rate)
 
-### WEEKLY DATA VIZ
-#### This visualization shows the last week and compares today to how the Peso has been doing compared to it.
+### WEEKLY DATA VISUALIZATION
 p_last7 <- ggplot() +
   geom_line(data = daily_7, aes(x = Date, y = end_rate), linewidth = 1.2, color = "gray40") +
   
-  # Today's colored point
-  geom_point(data = today_df, aes(x = Date, y = end_rate), 
-             color = get_today_color(today_rate, yesterday_rate, size = 4) +
+  # FIXED POINT
+  geom_point(
+    data = today_df,
+    aes(x = Date, y = end_rate),
+    color = get_today_color(today_rate, yesterday_rate),
+    size = 4
+  ) +
+  
   labs(
     title = "USD/MXN: Last 7 Days",
     x = "Date",
@@ -73,7 +73,6 @@ p_last7 <- ggplot() +
 
 # Save the plot
 ggsave("plots/last7_comparison_colored.png", p_last7, width = 10, height = 6)
-
 
 
 ## Loading historical data
@@ -87,9 +86,7 @@ if (!file.exists(hist_file)) {
 historical <- read_csv(hist_file, show_col_types = FALSE)
 historical <- historical %>% mutate(date = as.Date(date))
 
-
 ## Historical line plot
-### Shows today compared to the last 5 years (on this exact same date)
 p_hist <- ggplot(historical, aes(x = date, y = rate)) +
   geom_line(linewidth = 1.1) +
   labs(
@@ -114,9 +111,3 @@ p_compare <- ggplot() +
   theme_minimal(base_size = 14)
 
 ggsave("plots/comparison_plot.png", p_compare, width = 10, height = 6)
-
-
-
-
-
-
