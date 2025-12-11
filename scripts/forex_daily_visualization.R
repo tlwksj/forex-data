@@ -101,7 +101,7 @@ ggsave("plots/historical_exchange_rate.png", p_hist, width = 10, height = 6)
 
 ## Combined comparison plot
 p_compare <- ggplot() +
-  geom_line(data = historical, aes(x = date, y = rate), color = "steelblue", linewidth = 1) +
+  geom_point(data = historical, aes(x = date, y = rate), color = "steelblue", linewidth = 1) +
   geom_point(data = daily, aes(x = Date, y = end_rate), color = "red", size = 2) +
   labs(
     title = "USD/MXN Exchange Rate: Historical vs Most Recent Daily",
@@ -111,3 +111,4 @@ p_compare <- ggplot() +
   theme_minimal(base_size = 14)
 
 ggsave("plots/comparison_plot.png", p_compare, width = 10, height = 6)
+
